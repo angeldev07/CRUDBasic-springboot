@@ -41,7 +41,25 @@ public class CategoriaViewController {
 	@PostMapping("/update")
 	public String update(@ModelAttribute Categoria categoria, RedirectAttributes attributes) {
 		//actualizamos la categoria
-		System.out.println(categoria.toString());
+		cr.save(categoria);
+		return "redirect:/categorias_view/listar";
+	}
+
+	@GetMapping("/delete")
+	public String delete(@RequestParam("id") int id,RedirectAttributes attributes){
+		cr.deleteById(id);
+		return "redirect:/categorias_view/listar";
+	}
+
+	@GetMapping("/new")
+	public String newCategorie(Model model) {
+		model.addAttribute("categoria",new Categoria());
+		return "edit_categoria";
+	}
+
+	@PostMapping("/add")
+	public String add(@ModelAttribute Categoria categoria, RedirectAttributes attributes) {
+		//guardamos el valor la categoria
 		cr.save(categoria);
 		return "redirect:/categorias_view/listar";
 	}

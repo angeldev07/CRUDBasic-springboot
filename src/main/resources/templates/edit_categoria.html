@@ -9,17 +9,34 @@
   </head>
 </head>
 <body>
-    <h1 th:text="'editando la categoria con id: ' + ${categoria.id}"> </h1>
-    <hr>
     
-    <form action="/categorias_view/update" method="post" th:if="${categoria != null}">
-        <input type="hidden" name="id" th:value="${categoria.id}">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="descripcion">Descripción</span>
-            <input type="text" class="form-control" placeholder="descripcion" aria-label="descripcion" aria-describedby="descripcion" th:value="${categoria.descripcion}" th:field="${categoria.descripcion}">
-        </div>  
-        <button type="submit" class="btn btn-success">Editar</button>
-    </form>
+    <h1 th:text="'editando la categoria con id: ' + ${categoria.id}" th:if="${categoria != null && categoria.id != 0}"> </h1>
+    <h1 th:text="'Añadiendo nueva categoria '" th:if="${categoria != null && categoria.id == 0}"> </h1>
+
+    <hr>
+
+    <div  th:if="${categoria != null && categoria.id != 0}">
+        <form action="/categorias_view/update" method="post">
+            <input type="hidden" name="id" th:value="${categoria.id}" th:if="${categoria != null}">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="descripcion">Descripción</span>
+                <input type="text" class="form-control" placeholder="descripcion" aria-label="descripcion" aria-describedby="descripcion" th:value="${categoria.descripcion}" th:field="${categoria.descripcion}">
+            </div>  
+            <button type="submit" class="btn btn-success" th:if="${categoria != null}">Editar</button>
+        </form>
+    </div>
+
+    <div th:if="${categoria.id == 0}">
+        <form  action="/categorias_view/add" method="post">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="descripcion">Descripción</span>
+                <input type="text" class="form-control" placeholder="descripcion" aria-label="descripcion" aria-describedby="descripcion" th:field="${categoria.descripcion}">
+            </div>  
+            <button type="submit" class="btn btn-success">Añadir</button>
+        </form>
+    </div>
+    
+    
 
 </body>
 </html>
